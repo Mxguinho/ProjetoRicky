@@ -1,23 +1,17 @@
 [
   {
-    "id": "design_1",
-    "name": "Rosa Silvestre",
-    "description": "Bordado em ponto cruz com detalhes delicados em rosa e verde.",
-    "categoryId": "cat_1",
-    "image": "data/images/rosa-silvestre.jpg",
+    "id": "design_8xagi0ympehp0ko",
+    "name": "teste",
+    "categoryId": "cat_xj4qnqcmpehn33r",
+    "description": "teste teste",
+    "image": "data/images/wallhaven-x6p3ll.png",
+    "file": "",
+    "createdAt": "2026-05-20",
     "files": [
-      { "name": "Padrão PDF", "path": "data/files/rosa-silvestre.pdf" },
-      { "name": "Grade de pontos", "path": "data/files/rosa-silvestre-grade.pdf" }
-    ],
-    "createdAt": "2025-01-10"
-  },
-  {
-    "id": "design_2",
-    "name": "Borboleta Azul",
-    "description": "Ponto satin em tons de azul cobalto e turquesa.",
-    "categoryId": "cat_2",
-    "image": "data/images/borboleta-azul.jpg",
-    "files": [],
-    "createdAt": "2025-02-14"
+      {
+        "name": "teste",
+        "path": "data/files/Aula01.pdf"
+      }
+    ]
   }
 ]

@@ -1,4 +1,4 @@
-# 🧵 Ateliê de Bordado — Catálogo Digital
+# 🧵 Ateliê de Bordado — Catálogo Digital — Para acessar as funcionalidades abra o arquivo admin.html 
 
 Site estático para catalogar seus desenhos de bordado, hospedável gratuitamente no **GitHub Pages**.
 
