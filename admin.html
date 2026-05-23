@@ -1,0 +1,1377 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ateliê — Catálogo de Bordados</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  /* ─── Reset & Variables ───────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream:    #f7f3ee;
+    --warm:     #ede6db;
+    --paper:    #faf7f3;
+    --ink:      #2a2118;
+    --ink-soft: #6b5e4e;
+    --ink-mute: #a8998a;
+    --rose:     #b5636e;
+    --rose-lt:  #e8c4c8;
+    --sage:     #6b8c76;
+    --sage-lt:  #c4d8ca;
+    --border:   #ddd5c8;
+    --shadow:   rgba(42,33,24,0.08);
+    --shadow-md:rgba(42,33,24,0.15);
+    --radius:   12px;
+    --radius-sm:8px;
+    --font-serif: 'Cormorant Garamond', Georgia, serif;
+    --font-sans:  'DM Sans', system-ui, sans-serif;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background: var(--cream);
+    color: var(--ink);
+    min-height: 100vh;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* ─── Header ──────────────────────────────────────── */
+  header {
+    background: var(--paper);
+    border-bottom: 1px solid var(--border);
+    padding: 0 clamp(1rem, 4vw, 3rem);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px var(--shadow);
+  }
+
+  .header-brand {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    padding: 1rem 0;
+  }
+
+  .header-brand h1 {
+    font-family: var(--font-serif);
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+  }
+
+  .header-brand span {
+    font-family: var(--font-serif);
+    font-size: 0.85rem;
+    color: var(--ink-mute);
+    font-style: italic;
+    letter-spacing: 0.06em;
+  }
+
+  .header-actions {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 0.5rem 0;
+  }
+
+  /* ─── Buttons ─────────────────────────────────────── */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 1.1rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid transparent;
+    cursor: pointer;
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    transition: all 0.18s ease;
+    white-space: nowrap;
+    text-decoration: none;
+  }
+
+  .btn-primary {
+    background: var(--ink);
+    color: var(--cream);
+    border-color: var(--ink);
+  }
+  .btn-primary:hover { background: #3d2f21; border-color: #3d2f21; }
+
+  .btn-rose {
+    background: var(--rose);
+    color: white;
+    border-color: var(--rose);
+  }
+  .btn-rose:hover { background: #9e525c; border-color: #9e525c; }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--ink-soft);
+    border-color: var(--border);
+  }
+  .btn-ghost:hover { background: var(--warm); color: var(--ink); }
+
+  .btn-danger {
+    background: transparent;
+    color: #b53030;
+    border-color: #e8c0c0;
+  }
+  .btn-danger:hover { background: #fbeaea; }
+
+  .btn-icon {
+    padding: 0.5rem 0.7rem;
+  }
+
+  .btn-sm { padding: 0.35rem 0.8rem; font-size: 0.8rem; }
+
+  /* ─── Layout ──────────────────────────────────────── */
+  .app-layout {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    min-height: calc(100vh - 64px);
+  }
+
+  /* ─── Sidebar ─────────────────────────────────────── */
+  aside {
+    background: var(--paper);
+    border-right: 1px solid var(--border);
+    padding: 1.5rem 1rem;
+    position: sticky;
+    top: 64px;
+    height: calc(100vh - 64px);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .sidebar-section-title {
+    font-family: var(--font-sans);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-bottom: 0.75rem;
+  }
+
+  .cat-list { display: flex; flex-direction: column; gap: 0.3rem; }
+
+  .cat-chip {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: 0.875rem;
+    color: var(--ink-soft);
+    transition: all 0.15s;
+    border: 1px solid transparent;
+    position: relative;
+  }
+  .cat-chip:hover { background: var(--warm); color: var(--ink); }
+  .cat-chip.active {
+    background: var(--warm);
+    color: var(--ink);
+    border-color: var(--border);
+    font-weight: 500;
+  }
+
+  .cat-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .cat-chip-count {
+    margin-left: auto;
+    font-size: 0.75rem;
+    color: var(--ink-mute);
+    background: var(--warm);
+    padding: 0 0.4rem;
+    border-radius: 20px;
+  }
+
+  .cat-chip .cat-delete-btn {
+    display: none;
+    position: absolute;
+    right: 6px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #b53030;
+    font-size: 0.75rem;
+    padding: 2px 4px;
+    border-radius: 4px;
+  }
+  .cat-chip:hover .cat-delete-btn { display: flex; align-items: center; }
+
+  /* ─── Main ─────────────────────────────────────────── */
+  main { padding: clamp(1rem, 3vw, 2rem); overflow-x: hidden; }
+
+  .toolbar {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+  }
+
+  .search-wrap {
+    position: relative;
+    flex: 1;
+    min-width: 200px;
+    max-width: 420px;
+  }
+
+  .search-wrap svg {
+    position: absolute;
+    left: 0.85rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--ink-mute);
+    pointer-events: none;
+  }
+
+  .search-input {
+    width: 100%;
+    padding: 0.55rem 1rem 0.55rem 2.4rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--paper);
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    color: var(--ink);
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .search-input:focus {
+    outline: none;
+    border-color: var(--ink-soft);
+    box-shadow: 0 0 0 3px rgba(42,33,24,0.06);
+  }
+
+  .view-toggle { display: flex; border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; }
+  .view-btn {
+    padding: 0.5rem 0.75rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--ink-mute);
+    transition: all 0.15s;
+    display: flex; align-items: center;
+  }
+  .view-btn.active { background: var(--warm); color: var(--ink); }
+  .view-btn:hover:not(.active) { background: var(--warm); }
+
+  /* ─── Empty State ─────────────────────────────────── */
+  .empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--ink-mute);
+  }
+  .empty-state .empty-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.4;
+  }
+  .empty-state h3 {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: var(--ink-soft);
+    margin-bottom: 0.5rem;
+  }
+
+  /* ─── Grid View ───────────────────────────────────── */
+  .designs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .design-card {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+    position: relative;
+  }
+  .design-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px var(--shadow-md);
+  }
+
+  .design-card-img {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    background: var(--warm);
+    display: block;
+  }
+
+  .design-card-img-placeholder {
+    width: 100%;
+    aspect-ratio: 4/3;
+    background: var(--warm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: var(--border);
+  }
+
+  .design-card-body { padding: 0.9rem 1rem 1rem; }
+
+  .design-card-cat {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-bottom: 0.4rem;
+  }
+
+  .design-card-name {
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    font-weight: 400;
+    line-height: 1.3;
+    margin-bottom: 0.4rem;
+    color: var(--ink);
+  }
+
+  .design-card-desc {
+    font-size: 0.82rem;
+    color: var(--ink-mute);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.5;
+    margin-bottom: 0.75rem;
+  }
+
+  .design-card-actions {
+    display: flex;
+    gap: 0.4rem;
+    justify-content: flex-end;
+  }
+
+  /* ─── List View ───────────────────────────────────── */
+  .designs-list { display: flex; flex-direction: column; gap: 0.75rem; }
+
+  .design-row {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem;
+    transition: box-shadow 0.15s;
+    cursor: pointer;
+  }
+  .design-row:hover { box-shadow: 0 4px 16px var(--shadow); }
+
+  .design-row-thumb {
+    width: 72px;
+    height: 56px;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
+    background: var(--warm);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--border);
+    font-size: 1.5rem;
+  }
+
+  .design-row-info { flex: 1; min-width: 0; }
+  .design-row-name {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    font-weight: 400;
+    margin-bottom: 0.15rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .design-row-desc {
+    font-size: 0.8rem;
+    color: var(--ink-mute);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .design-row-actions { display: flex; gap: 0.4rem; flex-shrink: 0; }
+
+  /* ─── Modal ───────────────────────────────────────── */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(42,33,24,0.45);
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    backdrop-filter: blur(3px);
+    animation: fadeIn 0.18s ease;
+  }
+  @keyframes fadeIn { from { opacity: 0; } }
+
+  .modal {
+    background: var(--paper);
+    border-radius: var(--radius);
+    box-shadow: 0 24px 64px rgba(0,0,0,0.25);
+    width: 100%;
+    max-width: 560px;
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: slideUp 0.22s ease;
+  }
+  @keyframes slideUp { from { transform: translateY(16px); opacity: 0; } }
+
+  .modal-lg { max-width: 720px; }
+
+  .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .modal-header h2 {
+    font-family: var(--font-serif);
+    font-size: 1.4rem;
+    font-weight: 300;
+  }
+
+  .modal-close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--ink-mute);
+    padding: 0.3rem;
+    border-radius: var(--radius-sm);
+    font-size: 1.2rem;
+    line-height: 1;
+    transition: color 0.15s;
+  }
+  .modal-close:hover { color: var(--ink); }
+
+  .modal-body { padding: 1.5rem; }
+  .modal-footer {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+  }
+
+  /* ─── Form ────────────────────────────────────────── */
+  .form-group { margin-bottom: 1.1rem; }
+  .form-label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 0.4rem;
+  }
+
+  .form-input, .form-textarea, .form-select {
+    width: 100%;
+    padding: 0.6rem 0.85rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--cream);
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    color: var(--ink);
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .form-input:focus, .form-textarea:focus, .form-select:focus {
+    outline: none;
+    border-color: var(--ink-soft);
+    box-shadow: 0 0 0 3px rgba(42,33,24,0.06);
+  }
+
+  .form-textarea { resize: vertical; min-height: 90px; }
+
+  .form-hint {
+    font-size: 0.75rem;
+    color: var(--ink-mute);
+    margin-top: 0.3rem;
+  }
+
+  .color-row {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
+  }
+  .color-swatch {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: transform 0.15s, border-color 0.15s;
+  }
+  .color-swatch:hover { transform: scale(1.15); }
+  .color-swatch.selected { border-color: var(--ink); transform: scale(1.15); }
+
+  /* ─── Design View Modal ───────────────────────────── */
+  .design-view-img {
+    width: 100%;
+    max-height: 340px;
+    object-fit: contain;
+    border-radius: var(--radius-sm);
+    background: var(--warm);
+    display: block;
+    margin-bottom: 1.25rem;
+  }
+
+  .design-view-meta { margin-bottom: 1rem; }
+  .design-view-meta h2 {
+    font-family: var(--font-serif);
+    font-size: 1.8rem;
+    font-weight: 300;
+    margin-bottom: 0.25rem;
+  }
+
+  .design-view-desc {
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+    line-height: 1.7;
+    margin-top: 0.75rem;
+  }
+
+  .tag-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.65rem;
+    border-radius: 20px;
+    background: var(--warm);
+    color: var(--ink-soft);
+    border: 1px solid var(--border);
+  }
+
+  .file-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--cream);
+    color: var(--ink-soft);
+    font-size: 0.85rem;
+    text-decoration: none;
+    transition: all 0.15s;
+    margin-top: 0.75rem;
+  }
+  .file-link:hover { background: var(--warm); color: var(--ink); border-color: var(--ink-soft); }
+
+  /* ─── Export Banner ───────────────────────────────── */
+  .export-banner {
+    background: linear-gradient(135deg, #2a2118 0%, #4a3828 100%);
+    color: var(--cream);
+    border-radius: var(--radius);
+    padding: 1.1rem 1.5rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    animation: fadeIn 0.3s ease;
+  }
+  .export-banner p { font-size: 0.875rem; flex: 1; opacity: 0.9; }
+  .export-banner strong { opacity: 1; }
+
+  .btn-export {
+    background: var(--rose);
+    color: white;
+    border-color: var(--rose);
+    flex-shrink: 0;
+  }
+  .btn-export:hover { background: #9e525c; }
+
+  /* ─── Confirm Dialog ──────────────────────────────── */
+  .confirm-msg { font-size: 0.9rem; color: var(--ink-soft); margin-bottom: 0.5rem; }
+  .confirm-name { font-family: var(--font-serif); font-size: 1.1rem; color: var(--ink); }
+
+  /* ─── Multi-file list ─────────────────────────────── */
+  .file-list { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 0.5rem; }
+
+  .file-row {
+    display: grid;
+    grid-template-columns: 1fr 1.6fr auto;
+    gap: 0.4rem;
+    align-items: center;
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 0.45rem 0.6rem;
+  }
+
+  .file-row input {
+    border: none;
+    background: transparent;
+    font-family: var(--font-sans);
+    font-size: 0.82rem;
+    color: var(--ink);
+    padding: 0.2rem 0.3rem;
+    min-width: 0;
+  }
+  .file-row input:focus { outline: 1px solid var(--ink-soft); border-radius: 4px; }
+  .file-row input::placeholder { color: var(--ink-mute); }
+
+  .file-row-sep { width: 1px; height: 18px; background: var(--border); flex-shrink: 0; }
+
+  .file-row-del {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--ink-mute);
+    padding: 2px 4px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    line-height: 1;
+    transition: color 0.15s;
+    flex-shrink: 0;
+  }
+  .file-row-del:hover { color: #b53030; }
+
+  .file-list-header {
+    display: grid;
+    grid-template-columns: 1fr 1.6fr auto;
+    gap: 0.4rem;
+    padding: 0 0.6rem;
+    margin-bottom: 0.2rem;
+  }
+  .file-list-header span {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+
+  .btn-add-file {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+    background: none;
+    border: 1px dashed var(--border);
+    border-radius: var(--radius-sm);
+    padding: 0.4rem 0.85rem;
+    cursor: pointer;
+    width: 100%;
+    justify-content: center;
+    transition: all 0.15s;
+    margin-top: 0.35rem;
+  }
+  .btn-add-file:hover { background: var(--warm); border-color: var(--ink-soft); color: var(--ink); }
+
+  /* ─── Scrollbar ───────────────────────────────────── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+  /* ─── Responsive ──────────────────────────────────── */
+  @media (max-width: 700px) {
+    .app-layout { grid-template-columns: 1fr; }
+    aside {
+      position: static;
+      height: auto;
+      border-right: none;
+      border-bottom: 1px solid var(--border);
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      padding: 1rem;
+    }
+    .cat-list { flex-direction: row; flex-wrap: wrap; }
+    .cat-chip .cat-delete-btn { display: flex; }
+    .sidebar-section-title { display: none; }
+    .add-cat-btn { display: none; }
+    .designs-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── Header ──────────────────────────────────── -->
+<header>
+  <div class="header-brand">
+    <h1>🧵 Ateliê</h1>
+    <span>catálogo de bordados</span>
+  </div>
+  <div class="header-actions">
+    <button class="btn btn-ghost" onclick="App.exportData()" title="Exportar JSONs para sincronizar via Git">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Exportar dados
+    </button>
+    <button class="btn btn-primary" onclick="App.openNewDesign()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Novo bordado
+    </button>
+  </div>
+</header>
+
+<!-- ─── App Layout ──────────────────────────────── -->
+<div class="app-layout">
+
+  <!-- Sidebar -->
+  <aside>
+    <div>
+      <div class="sidebar-section-title">Categorias</div>
+      <div class="cat-list" id="catList"></div>
+    </div>
+    <button class="btn btn-ghost add-cat-btn" onclick="App.openNewCategory()" style="width:100%;justify-content:center;font-size:0.8rem">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Nova categoria
+    </button>
+  </aside>
+
+  <!-- Main -->
+  <main>
+    <div id="exportBanner"></div>
+
+    <div class="toolbar">
+      <div class="search-wrap">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input class="search-input" type="search" placeholder="Pesquisar bordados…" id="searchInput" oninput="App.filter()">
+      </div>
+      <div class="view-toggle">
+        <button class="view-btn active" id="viewGrid" onclick="App.setView('grid')" title="Grade">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        </button>
+        <button class="view-btn" id="viewList" onclick="App.setView('list')" title="Lista">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+        </button>
+      </div>
+      <button class="btn btn-ghost btn-sm" onclick="App.openNewCategory()" style="display:none" id="mobileCatBtn">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Categoria
+      </button>
+    </div>
+
+    <div id="designsContainer"></div>
+  </main>
+</div>
+
+<!-- ─── Modals ────────────────────────────────────── -->
+<div id="modalRoot"></div>
+
+<script>
+// ════════════════════════════════════════════════════
+//  DATA LAYER
+// ════════════════════════════════════════════════════
+const Store = {
+  categories: [],
+  designs: [],
+  _dirty: false,
+
+  async load() {
+    // Try loading from the JSON files (GitHub Pages), fallback to localStorage
+    try {
+      const [catRes, desRes] = await Promise.all([
+        fetch('data/categories.json?t=' + Date.now()),
+        fetch('data/designs.json?t=' + Date.now())
+      ]);
+      if (catRes.ok) this.categories = await catRes.json();
+      if (desRes.ok) this.designs = await desRes.json();
+      // Merge any local edits on top
+      this._mergeLocal();
+    } catch(e) {
+      // Offline / local file — use localStorage only
+      this._loadLocal();
+    }
+  },
+
+  _mergeLocal() {
+    const lc = localStorage.getItem('bordado_categories');
+    const ld = localStorage.getItem('bordado_designs');
+    if (lc) {
+      try {
+        const parsed = JSON.parse(lc);
+        // If local has more items, use local (user edited locally)
+        if (parsed.length >= this.categories.length) this.categories = parsed;
+      } catch(e) {}
+    }
+    if (ld) {
+      try {
+        const parsed = JSON.parse(ld);
+        if (parsed.length >= this.designs.length) this.designs = parsed;
+      } catch(e) {}
+    }
+  },
+
+  _loadLocal() {
+    try {
+      const lc = localStorage.getItem('bordado_categories');
+      const ld = localStorage.getItem('bordado_designs');
+      if (lc) this.categories = JSON.parse(lc);
+      if (ld) this.designs = JSON.parse(ld);
+    } catch(e) {}
+  },
+
+  save() {
+    localStorage.setItem('bordado_categories', JSON.stringify(this.categories));
+    localStorage.setItem('bordado_designs', JSON.stringify(this.designs));
+    this._dirty = true;
+  },
+
+  exportJSON() {
+    // Download both JSON files for user to commit to git
+    this._download('categories.json', this.categories);
+    setTimeout(() => this._download('designs.json', this.designs), 300);
+    this._dirty = false;
+  },
+
+  _download(name, data) {
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  },
+
+  uid() {
+    return Math.random().toString(36).slice(2,9) + Date.now().toString(36);
+  },
+
+  getCat(id) { return this.categories.find(c => c.id === id); },
+  countInCat(id) { return this.designs.filter(d => d.categoryId === id).length; }
+};
+
+// ════════════════════════════════════════════════════
+//  PALETTE
+// ════════════════════════════════════════════════════
+const PALETTE = [
+  '#b5636e','#c97b44','#c9a844','#6b9c5e','#4e8c8a',
+  '#4e6e8c','#7b5e9c','#9c5e7b','#8c7b5e','#5e7b6e'
+];
+
+// ════════════════════════════════════════════════════
+//  APP
+// ════════════════════════════════════════════════════
+const App = {
+  view: 'grid',
+  activeCategory: 'all',
+
+  async init() {
+    await Store.load();
+    this.renderSidebar();
+    this.renderDesigns();
+    this.checkExportBanner();
+  },
+
+  setView(v) {
+    this.view = v;
+    document.getElementById('viewGrid').classList.toggle('active', v === 'grid');
+    document.getElementById('viewList').classList.toggle('active', v === 'list');
+    this.renderDesigns();
+  },
+
+  // ── Sidebar ──────────────────────────────────────
+  renderSidebar() {
+    const list = document.getElementById('catList');
+    const all = { id: 'all', name: 'Todos os bordados', count: Store.designs.length };
+    const cats = Store.categories;
+
+    list.innerHTML = [all, ...cats].map(c => {
+      const isAll = c.id === 'all';
+      const count = isAll ? Store.designs.length : Store.countInCat(c.id);
+      const dot = !isAll ? `<span class="cat-dot" style="background:${c.color}"></span>` : '🧵';
+      return `
+        <div class="cat-chip ${this.activeCategory === c.id ? 'active' : ''}"
+             onclick="App.selectCategory('${c.id}')">
+          ${dot}
+          <span>${c.name}</span>
+          <span class="cat-chip-count">${count}</span>
+          ${!isAll ? `<button class="cat-delete-btn" onclick="event.stopPropagation();App.confirmDeleteCat('${c.id}')" title="Apagar categoria">✕</button>` : ''}
+        </div>`;
+    }).join('');
+  },
+
+  selectCategory(id) {
+    this.activeCategory = id;
+    this.renderSidebar();
+    this.renderDesigns();
+  },
+
+  // ── Designs ──────────────────────────────────────
+  filter() {
+    this.renderDesigns();
+  },
+
+  getFiltered() {
+    const q = document.getElementById('searchInput').value.trim().toLowerCase();
+    return Store.designs.filter(d => {
+      const matchCat = this.activeCategory === 'all' || d.categoryId === this.activeCategory;
+      const matchQ = !q || d.name.toLowerCase().includes(q) || (d.description||'').toLowerCase().includes(q);
+      return matchCat && matchQ;
+    });
+  },
+
+  renderDesigns() {
+    const container = document.getElementById('designsContainer');
+    const items = this.getFiltered();
+
+    if (!items.length) {
+      container.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-icon">🪡</div>
+          <h3>Nenhum bordado encontrado</h3>
+          <p>Adicione um novo bordado ou ajuste o filtro.</p>
+        </div>`;
+      return;
+    }
+
+    if (this.view === 'grid') {
+      container.innerHTML = `<div class="designs-grid">${items.map(d => this.cardHTML(d)).join('')}</div>`;
+    } else {
+      container.innerHTML = `<div class="designs-list">${items.map(d => this.rowHTML(d)).join('')}</div>`;
+    }
+  },
+
+  imgOrPlaceholder(d, cls) {
+    if (d.image) {
+      return `<img src="${d.image}" alt="${esc(d.name)}" class="${cls}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+              <div class="${cls === 'design-card-img' ? 'design-card-img-placeholder' : 'design-row-thumb'}" style="display:none">🧵</div>`;
+    }
+    return `<div class="${cls === 'design-card-img' ? 'design-card-img-placeholder' : 'design-row-thumb'}">🧵</div>`;
+  },
+
+  cardHTML(d) {
+    const cat = Store.getCat(d.categoryId);
+    const dot = cat ? `<span style="width:7px;height:7px;border-radius:50%;background:${cat.color};display:inline-block"></span>` : '';
+    return `
+      <div class="design-card" onclick="App.viewDesign('${d.id}')">
+        ${this.imgOrPlaceholder(d, 'design-card-img')}
+        <div class="design-card-body">
+          <div class="design-card-cat">${dot} ${cat ? esc(cat.name) : '—'}</div>
+          <div class="design-card-name">${esc(d.name)}</div>
+          <div class="design-card-desc">${esc(d.description||'')}</div>
+          <div class="design-card-actions">
+            <button class="btn btn-ghost btn-sm btn-icon" onclick="event.stopPropagation();App.openEditDesign('${d.id}')" title="Editar">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            </button>
+            <button class="btn btn-danger btn-sm btn-icon" onclick="event.stopPropagation();App.confirmDeleteDesign('${d.id}')" title="Apagar">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>`;
+  },
+
+  rowHTML(d) {
+    const cat = Store.getCat(d.categoryId);
+    const thumb = d.image
+      ? `<img src="${d.image}" alt="${esc(d.name)}" class="design-row-thumb" style="border-radius:8px;object-fit:cover" onerror="this.textContent='🧵';this.style='width:72px;height:56px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;border-radius:8px;background:var(--warm);color:var(--border);border:0'">`
+      : `<div class="design-row-thumb">🧵</div>`;
+    return `
+      <div class="design-row" onclick="App.viewDesign('${d.id}')">
+        ${thumb}
+        <div class="design-row-info">
+          <div class="design-row-name">${esc(d.name)}</div>
+          <div class="design-row-desc">${cat ? esc(cat.name) + ' · ' : ''}${esc(d.description||'')}</div>
+        </div>
+        <div class="design-row-actions">
+          <button class="btn btn-ghost btn-sm btn-icon" onclick="event.stopPropagation();App.openEditDesign('${d.id}')" title="Editar">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          </button>
+          <button class="btn btn-danger btn-sm btn-icon" onclick="event.stopPropagation();App.confirmDeleteDesign('${d.id}')" title="Apagar">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg>
+          </button>
+        </div>
+      </div>`;
+  },
+
+  // ── View Design ───────────────────────────────────
+  viewDesign(id) {
+    const d = Store.designs.find(x => x.id === id);
+    if (!d) return;
+    const cat = Store.getCat(d.categoryId);
+    const imgBlock = d.image
+      ? `<img src="${d.image}" alt="${esc(d.name)}" class="design-view-img" onerror="this.style.display='none'">`
+      : '';
+    // Support both legacy `file` string and new `files` array
+    const fileEntries = Array.isArray(d.files) && d.files.length
+      ? d.files
+      : (d.file ? [{ name: 'Arquivo', path: d.file }] : []);
+    const fileBlock = fileEntries.length
+      ? `<div style="margin-top:0.75rem;display:flex;flex-direction:column;gap:0.4rem">
+           ${fileEntries.map(f => `
+             <a href="${esc(f.path)}" target="_blank" class="file-link">
+               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+               ${esc(f.name || f.path.split('/').pop())}
+             </a>`).join('')}
+         </div>`
+      : '';
+
+    Modal.open(`
+      <div class="modal-header">
+        <h2>${esc(d.name)}</h2>
+        <button class="modal-close" onclick="Modal.close()">✕</button>
+      </div>
+      <div class="modal-body">
+        ${imgBlock}
+        <div class="design-view-meta">
+          ${cat ? `<span class="tag-pill"><span style="width:8px;height:8px;border-radius:50%;background:${cat.color};display:inline-block"></span> ${esc(cat.name)}</span>` : ''}
+          ${d.createdAt ? `<span class="tag-pill" style="margin-left:0.4rem">📅 ${d.createdAt}</span>` : ''}
+        </div>
+        ${d.description ? `<div class="design-view-desc">${esc(d.description)}</div>` : ''}
+        ${fileBlock}
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" onclick="Modal.close()">Fechar</button>
+        <button class="btn btn-primary" onclick="Modal.close();App.openEditDesign('${id}')">Editar</button>
+      </div>
+    `);
+  },
+
+  // ── New / Edit Design ─────────────────────────────
+  openNewDesign() {
+    this._openDesignForm(null);
+  },
+
+  openEditDesign(id) {
+    const d = Store.designs.find(x => x.id === id);
+    this._openDesignForm(d);
+  },
+
+  _openDesignForm(d) {
+    const isEdit = !!d;
+    const catOptions = Store.categories.map(c =>
+      `<option value="${c.id}" ${d && d.categoryId === c.id ? 'selected' : ''}>${esc(c.name)}</option>`
+    ).join('');
+
+    // Collect existing files (support legacy)
+    const existingFiles = d
+      ? (Array.isArray(d.files) && d.files.length ? d.files : (d.file ? [{ name: '', path: d.file }] : []))
+      : [];
+
+    Modal.open(`
+      <div class="modal-header">
+        <h2>${isEdit ? 'Editar bordado' : 'Novo bordado'}</h2>
+        <button class="modal-close" onclick="Modal.close()">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">Nome *</label>
+          <input class="form-input" id="f_name" value="${d ? esc(d.name) : ''}" placeholder="Ex: Rosa Silvestre" autofocus>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Categoria</label>
+          <select class="form-select" id="f_cat">
+            <option value="">— sem categoria —</option>
+            ${catOptions}
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Descrição</label>
+          <textarea class="form-textarea" id="f_desc" placeholder="Técnica, cores, tamanho…">${d ? esc(d.description||'') : ''}</textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Caminho da imagem</label>
+          <input class="form-input" id="f_img" value="${d ? esc(d.image||'') : ''}" placeholder="data/images/nome-da-imagem.jpg">
+          <div class="form-hint">Coloque a imagem na pasta <code>data/images/</code> e informe o caminho relativo.</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Arquivos vinculados</label>
+          <div class="file-list-header">
+            <span>Nome</span>
+            <span>Caminho do arquivo</span>
+            <span></span>
+          </div>
+          <div class="file-list" id="f_files_list"></div>
+          <button type="button" class="btn-add-file" onclick="App._addFileRow()">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Adicionar arquivo
+          </button>
+          <div class="form-hint" style="margin-top:0.5rem">Coloque os arquivos na pasta <code>data/files/</code> e informe o caminho relativo. O nome é opcional.</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Data</label>
+          <input class="form-input" id="f_date" type="date" value="${d ? (d.createdAt||'') : new Date().toISOString().split('T')[0]}">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" onclick="Modal.close()">Cancelar</button>
+        <button class="btn btn-primary" onclick="App._saveDesign('${isEdit ? d.id : ''}')">
+          ${isEdit ? 'Salvar' : 'Adicionar'}
+        </button>
+      </div>
+    `);
+    // Populate file rows after DOM is ready
+    this._populateFileRows(existingFiles);
+  },
+
+  _addFileRow(name='', path='') {
+    const list = document.getElementById('f_files_list');
+    if (!list) return;
+    const row = document.createElement('div');
+    row.className = 'file-row';
+    row.innerHTML = `
+      <input type="text" placeholder="Nome do arquivo" value="${name.replace(/"/g,'&quot;')}">
+      <div class="file-row-sep"></div>
+      <input type="text" placeholder="data/files/arquivo.pdf" value="${path.replace(/"/g,'&quot;')}">
+      <button type="button" class="file-row-del" onclick="this.closest('.file-row').remove()" title="Remover">✕</button>
+    `;
+    list.appendChild(row);
+    row.querySelector('input').focus();
+  },
+
+  _populateFileRows(files) {
+    // Called after modal DOM is ready
+    const list = document.getElementById('f_files_list');
+    if (!list) return;
+    list.innerHTML = '';
+    if (files && files.length) {
+      files.forEach(f => this._addFileRow(f.name || '', f.path || ''));
+    }
+  },
+
+  _saveDesign(id) {
+    const name = document.getElementById('f_name').value.trim();
+    if (!name) { alert('O nome é obrigatório.'); return; }
+
+    // Collect all file rows
+    const fileRows = document.querySelectorAll('#f_files_list .file-row');
+    const files = Array.from(fileRows).map(row => {
+      const inputs = row.querySelectorAll('input');
+      return { name: inputs[0].value.trim(), path: inputs[1].value.trim() };
+    }).filter(f => f.path);
+
+    const data = {
+      name,
+      categoryId: document.getElementById('f_cat').value || '',
+      description: document.getElementById('f_desc').value.trim(),
+      image: document.getElementById('f_img').value.trim(),
+      files,
+      file: '', // clear legacy field
+      createdAt: document.getElementById('f_date').value
+    };
+
+    if (id) {
+      const i = Store.designs.findIndex(d => d.id === id);
+      if (i >= 0) Store.designs[i] = { ...Store.designs[i], ...data };
+    } else {
+      Store.designs.unshift({ id: 'design_' + Store.uid(), ...data });
+    }
+
+    Store.save();
+    Modal.close();
+    this.renderSidebar();
+    this.renderDesigns();
+    this.showExportBanner();
+  },
+
+  // ── Delete Design ─────────────────────────────────
+  confirmDeleteDesign(id) {
+    const d = Store.designs.find(x => x.id === id);
+    if (!d) return;
+    Modal.open(`
+      <div class="modal-header">
+        <h2>Apagar bordado</h2>
+        <button class="modal-close" onclick="Modal.close()">✕</button>
+      </div>
+      <div class="modal-body">
+        <p class="confirm-msg">Tem certeza que deseja apagar:</p>
+        <p class="confirm-name">${esc(d.name)}</p>
+        <p class="confirm-msg" style="margin-top:0.75rem;font-size:0.8rem">Esta ação remove o bordado do catálogo. Os arquivos de imagem e padrão não serão apagados.</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" onclick="Modal.close()">Cancelar</button>
+        <button class="btn btn-danger" onclick="App._deleteDesign('${id}')">Apagar</button>
+      </div>
+    `);
+  },
+
+  _deleteDesign(id) {
+    Store.designs = Store.designs.filter(d => d.id !== id);
+    Store.save();
+    Modal.close();
+    this.renderSidebar();
+    this.renderDesigns();
+    this.showExportBanner();
+  },
+
+  // ── New Category ──────────────────────────────────
+  openNewCategory() {
+    let selectedColor = PALETTE[0];
+    const swatches = PALETTE.map((c, i) =>
+      `<div class="color-swatch ${i === 0 ? 'selected' : ''}" style="background:${c}" onclick="App._selectColor('${c}',this)" data-color="${c}"></div>`
+    ).join('');
+
+    Modal.open(`
+      <div class="modal-header">
+        <h2>Nova categoria</h2>
+        <button class="modal-close" onclick="Modal.close()">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">Nome da categoria *</label>
+          <input class="form-input" id="fc_name" placeholder="Ex: Flores, Paisagens…" autofocus>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Cor</label>
+          <div class="color-row" id="colorRow">${swatches}</div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" onclick="Modal.close()">Cancelar</button>
+        <button class="btn btn-primary" onclick="App._saveCategory()">Criar</button>
+      </div>
+    `);
+  },
+
+  _selectedColor: PALETTE[0],
+  _selectColor(color, el) {
+    this._selectedColor = color;
+    document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('selected'));
+    el.classList.add('selected');
+  },
+
+  _saveCategory() {
+    const name = document.getElementById('fc_name').value.trim();
+    if (!name) { alert('O nome é obrigatório.'); return; }
+    const selected = document.querySelector('.color-swatch.selected');
+    const color = selected ? selected.dataset.color : PALETTE[0];
+    Store.categories.push({ id: 'cat_' + Store.uid(), name, color });
+    Store.save();
+    Modal.close();
+    this.renderSidebar();
+    this.showExportBanner();
+  },
+
+  // ── Delete Category ───────────────────────────────
+  confirmDeleteCat(id) {
+    const c = Store.getCat(id);
+    if (!c) return;
+    const count = Store.countInCat(id);
+    Modal.open(`
+      <div class="modal-header">
+        <h2>Apagar categoria</h2>
+        <button class="modal-close" onclick="Modal.close()">✕</button>
+      </div>
+      <div class="modal-body">
+        <p class="confirm-msg">Tem certeza que deseja apagar a categoria:</p>
+        <p class="confirm-name">${esc(c.name)}</p>
+        ${count ? `<p class="confirm-msg" style="margin-top:0.75rem;color:#b53030">⚠️ ${count} bordado(s) estão nesta categoria. Eles não serão apagados, mas ficarão sem categoria.</p>` : ''}
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" onclick="Modal.close()">Cancelar</button>
+        <button class="btn btn-danger" onclick="App._deleteCategory('${id}')">Apagar</button>
+      </div>
+    `);
+  },
+
+  _deleteCategory(id) {
+    Store.categories = Store.categories.filter(c => c.id !== id);
+    // Remove category from designs
+    Store.designs.forEach(d => { if (d.categoryId === id) d.categoryId = ''; });
+    Store.save();
+    if (this.activeCategory === id) this.activeCategory = 'all';
+    Modal.close();
+    this.renderSidebar();
+    this.renderDesigns();
+    this.showExportBanner();
+  },
+
+  // ── Export ────────────────────────────────────────
+  exportData() {
+    Store.exportJSON();
+    document.getElementById('exportBanner').innerHTML = '';
+  },
+
+  showExportBanner() {
+    document.getElementById('exportBanner').innerHTML = `
+      <div class="export-banner">
+        <p><strong>Dados alterados!</strong> Para sincronizar entre dispositivos via GitHub, exporte os JSONs e faça commit no repositório.</p>
+        <button class="btn btn-export" onclick="App.exportData()">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:4px"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Exportar JSONs
+        </button>
+      </div>`;
+  },
+
+  checkExportBanner() {
+    // Show banner if localStorage differs from what's on disk
+    if (Store._dirty) this.showExportBanner();
+  }
+};
+
+// ════════════════════════════════════════════════════
+//  MODAL
+// ════════════════════════════════════════════════════
+const Modal = {
+  open(html) {
+    const root = document.getElementById('modalRoot');
+    root.innerHTML = `
+      <div class="modal-overlay" onclick="Modal._bgClick(event)">
+        <div class="modal">${html}</div>
+      </div>`;
+    root.querySelector('.modal input, .modal textarea')?.focus();
+  },
+  close() {
+    document.getElementById('modalRoot').innerHTML = '';
+  },
+  _bgClick(e) {
+    if (e.target.classList.contains('modal-overlay')) Modal.close();
+  }
+};
+
+// Escape HTML
+function esc(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// Keyboard: Esc to close modal
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') Modal.close();
+});
+
+// Start
+App.init();
+</script>
+</body>
+</html>
